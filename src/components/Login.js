@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import { Alert } from "./Alert";
 
@@ -12,7 +12,7 @@ export const Login = () => {
     password: ''
   });
 
-  const { login, loginWithGoogle } = useAuth();
+  const { login, loginWithGoogle, resetPassword } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState();
 
@@ -40,11 +40,22 @@ export const Login = () => {
    }
   };
 
+  const handleResetPassword = async () => {
+    if (!user.email) return setError( 'Porfavor coloca tu Email');
+    try {
+      await resetPassword(user.email);
+      setError('Le enviaremos un Email con el enlace para resetear su contraeña')
+    } catch (error) {
+      setError(error.message)
+    }
+  };
+
   return (
 
     <div>
       <br/> <br/>
       <form onSubmit={handleSumit}>
+       
         <div> Login </div>
 
         <label htmlFor='email'> Email </label>
@@ -53,9 +64,18 @@ export const Login = () => {
         <label htmlFor='password'> Password </label>
         <input type='password' name='password' id='password' placeholder="*******" onChange={handleChange} />
 
+      <div> 
+
         <button> Login </button>
 
+        <a href="#!" onClick={handleResetPassword}> Olvidastes tu contraseña? </a>
+
+      </div>
+
       </form>
+
+        <p> ¿No tienes una cuenta? <Link to='/Register'> Registrar </Link></p>
+      
 
       <button onClick={handleGoogleSignin}> Con Google </button>
 

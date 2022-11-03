@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import { Alert } from '../components/Alert';
 
@@ -45,6 +45,9 @@ export const Register = () => {
         <button> Register </button>
 
       </form>
+
+      <p> ¿Ya tienes una cuenta? <Link to='/Login'> Login </Link></p>
+
 
       {error && <Alert message={error} />}
       
