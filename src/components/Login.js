@@ -3,8 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import { Alert } from "./Alert";
 
-
-
 export const Login = () => {
 
   const [user, setUser] = useState({
@@ -30,7 +28,7 @@ export const Login = () => {
       setError(error.message);
     }
   };
-
+ 
   const handleGoogleSignin = async () => {
    try {
     await loginWithGoogle()
