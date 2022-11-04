@@ -1,17 +1,37 @@
+
 import { Button, Checkbox, Form, Input } from 'antd';
 import React from 'react';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
+import { useAuth } from "../context/authContext";
+import { Alert } from "../components/Alert";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react"
+import { arrayCodesErrorFirebase } from '../env/enviroment'; 
+import '../pages/LoginTemp.css'
 
 const LoginTemp = () => {
-  const onFinish = (values) => {
-    console.log('Success:', values);
+
+  const { login, loginWithGoogle, resetPassword } = useAuth();
+  const navigate = useNavigate();
+  const [errormsg, setErrorMsg] = useState({ code: '', msg: '' });
+
+  const onFinish = async (values) => {
+    setErrorMsg({code: '', msg: ''});
+    const {username, password} = values;
+    try {
+      await login(username, password);
+      navigate('/');
+    } catch (err) {
+      setErrorMsg({ code:err.code, msg:arrayCodesErrorFirebase[err.code]})
+    }
   };
+
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
   return (
     
-    <div >
+    <div className='container'>
 
     <Form
       name="basic"
@@ -38,12 +58,13 @@ const LoginTemp = () => {
           },
         ]}
       >
-        <Input />
+        <Input/>
       </Form.Item>
 
       <Form.Item
         label="Contraseña"
         name="password"
+        
         rules={[
           {
             required: true,
@@ -65,19 +86,38 @@ const LoginTemp = () => {
         <Checkbox>Recordar Correo</Checkbox>
       </Form.Item>
 
+        <Form.Item
+          wrapperCol={{
+            offset: 8,
+            span: 16,
+          }}
+        >
+          <Button type="primary" htmlType="submit">
+            Login
+          </Button>
+          
+          <Button type="primary" htmlType="submit">
+          Registrar
+        </Button>
+
+        </Form.Item>
+
       <Form.Item
+        name="remember"
+        valuePropName="checked"
         wrapperCol={{
           offset: 8,
           span: 16,
         }}
       >
-        <Button type="primary" htmlType="submit">
-          Login
-        </Button>
+        <p> ¿No tienes una cuenta? <Link to='/Register'> Registrar </Link></p>
       </Form.Item>
-
-      
+    
     </Form>
+
+
+    {errormsg.code && <Alert message={errormsg.msg} />}
+
     </div>
   );
 };
