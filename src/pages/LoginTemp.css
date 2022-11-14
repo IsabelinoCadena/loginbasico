@@ -7,3 +7,10 @@
     flex-wrap: wrap;
     background-color: rgb(254, 254, 254);
 }
+
+.title {
+    					
+    display: flex;				
+    align-items: center;			
+    justify-content: center;	
+}

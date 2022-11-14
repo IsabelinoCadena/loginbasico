@@ -1,5 +1,5 @@
 
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Form, Input, Typography } from 'antd';
 import React from 'react';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { useAuth } from "../context/authContext";
@@ -8,12 +8,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react"
 import { arrayCodesErrorFirebase } from '../env/enviroment'; 
 import '../pages/LoginTemp.css'
+import GoogleButton from 'react-google-button';
+
 
 const LoginTemp = () => {
 
-  const { login, loginWithGoogle, resetPassword } = useAuth();
-  const navigate = useNavigate();
   const [errormsg, setErrorMsg] = useState({ code: '', msg: '' });
+  const { login, loginWithGoogle } = useAuth();
+  const navigate = useNavigate();
+  const { Title } = Typography;
 
   const onFinish = async (values) => {
     setErrorMsg({code: '', msg: ''});
@@ -26,12 +29,24 @@ const LoginTemp = () => {
     }
   };
 
+  const handleGoogleSignin = async () => {
+    try {
+     await loginWithGoogle()
+     navigate('/');
+    } catch (error) {
+     setErrorMsg(error.message)
+    }
+   };
+
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
+
   return (
     
     <div className='container'>
+
+
 
     <Form
       name="basic"
@@ -48,6 +63,14 @@ const LoginTemp = () => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
+      <Typography className='title'>
+          <Title > ¡Hola de nuevo! </Title>
+      
+      </ Typography>
+
+      <br />
+      <br />
+
       <Form.Item
         label="Correo"
         name="username"
@@ -75,7 +98,7 @@ const LoginTemp = () => {
         <Input.Password />
       </Form.Item>
 
-      <Form.Item
+      {/* <Form.Item
         name="remember"
         valuePropName="checked"
         wrapperCol={{
@@ -84,7 +107,7 @@ const LoginTemp = () => {
         }}
       >
         <Checkbox>Recordar Correo</Checkbox>
-      </Form.Item>
+      </Form.Item> */}
 
         <Form.Item
           wrapperCol={{
@@ -95,13 +118,26 @@ const LoginTemp = () => {
           <Button type="primary" htmlType="submit">
             Login
           </Button>
-          
-          <Button type="primary" htmlType="submit">
-          Registrar
-        </Button>
+          <br /> <br />
+          <Link href="#!" target="blank">
+          ¿Olvidastes tu contraseña?
+        </Link>
 
         </Form.Item>
 
+        <Form.Item
+          name="remember"
+          valuePropName="checked"
+          wrapperCol={{
+            offset: 8,
+            span: 16,
+          }}
+        >
+  
+      <GoogleButton onClick={handleGoogleSignin}/>
+         
+        </Form.Item>
+      
       <Form.Item
         name="remember"
         valuePropName="checked"
@@ -112,11 +148,12 @@ const LoginTemp = () => {
       >
         <p> ¿No tienes una cuenta? <Link to='/Register'> Registrar </Link></p>
       </Form.Item>
-    
+      
     </Form>
 
 
     {errormsg.code && <Alert message={errormsg.msg} />}
+
 
     </div>
   );

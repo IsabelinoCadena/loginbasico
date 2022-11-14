@@ -1,19 +1,42 @@
 // Import the functions you need from the SDKs you need
+
 import { initializeApp } from "firebase/app";
+
 import { getAuth } from "firebase/auth";
+
 // TODO: Add SDKs for Firebase products that you want to use
+
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+
 // Your web app's Firebase configuration
+
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDUR7bUrpZgTGnkgDi6HVkom8xQVF0wEHk",
-  authDomain: "react-fb-auth-28733.firebaseapp.com",
-  projectId: "react-fb-auth-28733",
-  storageBucket: "react-fb-auth-28733.appspot.com",
-  messagingSenderId: "407866977019",
-  appId: "1:407866977019:web:c80a5a86d1018c25119e5e"
+
+  apiKey: "AIzaSyAFKmPsafHX3Ikl-oGqoozg6HCYK6UvgDo",
+
+  authDomain: "control-vehicular-3e8ca.firebaseapp.com",
+
+  databaseURL: "https://control-vehicular-3e8ca-default-rtdb.firebaseio.com",
+
+  projectId: "control-vehicular-3e8ca",
+
+  storageBucket: "control-vehicular-3e8ca.appspot.com",
+
+  messagingSenderId: "535583253536",
+
+  appId: "1:535583253536:web:0632fd1150fa7815b14845",
+
+  measurementId: "G-B4DK2MZ1TS"
+
 };
 
+
 // Initialize Firebase
+
 const app = initializeApp(firebaseConfig);
+
 export const auth = getAuth(app)
+

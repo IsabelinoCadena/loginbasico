@@ -1,9 +1,11 @@
-import { Login } from './components/Login'
-import './App.css';
+import { Login } from './pages/Login'
+// import './App.css';
 
 const App = () => {
   return (
+  
     <Login />
+    
   )
 }
 
