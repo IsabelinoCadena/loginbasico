@@ -55,7 +55,7 @@ export const Login = () => {
 
         <div className="mb-4">
         <label htmlFor='email' className="block text-sm font-bold mb-2"> Email </label>
-        <input type='email' name='email' placeholder='ejemplo@gmail.com' className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" onChange={handleChange}/>
+        <input type='email' name='email' placeholder='sekiro@gmail.com' className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" onChange={handleChange}/>
         </div>
  
         <div className="mb-4">
